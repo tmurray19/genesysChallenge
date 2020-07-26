@@ -55,16 +55,21 @@ class Client(Thread):
                 self.socket.send(f'{g.get_current_turn()} has won! Congratulations.'.encode())
                 print("Game is over, closing")
                 break
+
 # Specify that the socket server will accept exactly two connections
 server_socket.listen(2)
 
 # Create a new thread to handle each new connection
 print("Server started")
-while True:
+# Create an instance of our game
+g = connect_five_logic.Game()
+
+while True:    
     # Accept a client
     client_socket, address = server_socket.accept()
     # increment the player counter
     count+=1
+
     # Set the colour of the player
     if not red_taken:
         colour = 'RED'
@@ -72,9 +77,8 @@ while True:
     else:
         colour = 'YELLOW'
         red_taken = False
+
     # Create a new client instance
     Client(client_socket, address, colour)
-    
-    # Create an instance of our game
-    g = connect_five_logic.Game()
+
     
