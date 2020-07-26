@@ -3,7 +3,7 @@ import unittest
 from connect_five_logic import Game
 from connect_five_errors import BoardFullErorr, NoNumberInputError, NumberOutOfBoundsError
 
-class TestSetUp(unittest.TestCase):
+class GameUnitTests(unittest.TestCase):
 
     def setUp(self):
         self.g = Game()
