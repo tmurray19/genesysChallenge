@@ -13,7 +13,7 @@ class Game:
     def __init__(self):
         """Constructor defines amount of rows, columns, and the board as a 2d array"""
         self.columns = 9
-        self.rows = 6 
+        self.rows = 6
         self.has_winner = False
         self.current_turn = 'RED'
         self.chips = {
@@ -23,7 +23,7 @@ class Game:
         }
         # Create an empty board 
         self.board = [[self.chips.get("EMPTY")] * self.rows for _ in range(self.columns)]
-    
+        
     def get_has_winner(self):
         return self.has_winner
 
@@ -45,7 +45,7 @@ class Game:
                 print("Column is full")
                 raise Exception('Column is full')
             
-            # Move through the column top to bottom until an empty slot is found
+            # Move through the column bottom to top until an empty slot is found
             i = -1
             while col[i] != self.chips.get("EMPTY"):
                 i -= 1
