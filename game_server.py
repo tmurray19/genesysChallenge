@@ -64,8 +64,9 @@ class Client(Thread):
                         server_msg = b''
                         try:
                             g.insert_chip(self.socket.recv(1024), self.player_colour)
-                        except Exception:
-                            server_msg += "Error occured".encode()
+                        except Exception as e:
+                            print(e)
+                            server_msg += f"Error occured: {e}".encode()
                     # This code handles abrupt disconnections from a client for the other client
                     if count < 2:
                         server_msg += "Error, opponent disconnected. Game has been abruptly ended".encode()
