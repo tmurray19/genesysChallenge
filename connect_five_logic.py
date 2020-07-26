@@ -31,29 +31,38 @@ class Game:
         return self.current_turn
 
     def insert_chip(self, column, colour):
-        print(f'{self.get_current_turn()} is making a move')
-        """Drops a specific chip into a specified column"""
-        col = self.board[column]
+        try:
+            print(f'{self.get_current_turn()} is making a move')
+            """Drops a specific chip into a specified column"""
+            # Change input to integer
+            # Get absolute value to stop users going backwards through array
+            col = self.board[abs(int(column))-1]
 
-        chip = self.chips.get(colour)
+            chip = self.chips.get(colour)
 
-        # If the top of the column is not empty, we can't place a chip here
-        if col[0] != self.chips.get("EMPTY"):
-            print("Column is full")
-            return "Column is full, try again"
-        
-        # Move through the column top to bottom until an empty slot is found
-        i = -1
-        while col[i] != self.chips.get("EMPTY"):
-            i -= 1
-        # Place chip in empty slot
-        col[i] = chip
+            # If the top of the column is not empty, we can't place a chip here
+            if col[0] != self.chips.get("EMPTY"):
+                print("Column is full")
+                raise Exception('Column is full')
+            
+            # Move through the column top to bottom until an empty slot is found
+            i = -1
+            while col[i] != self.chips.get("EMPTY"):
+                i -= 1
+            # Place chip in empty slot
+            col[i] = chip
 
-        # Check to see if the winner has been found
-        if(self.check_for_winner(chip)):
-            return f"{colour} has won!!"
-        
-        self.current_turn = 'RED' if colour=='YELLOW' else 'YELLOW'
+            # Check to see if the winner has been found
+            if(self.check_for_winner(chip)):
+                return f"{colour} has won!!"
+            
+            self.current_turn = 'RED' if colour=='YELLOW' else 'YELLOW'
+        except ValueError:
+            print("Value error has occured, user did not enter number")
+            raise Exception('Player did not enter number')
+        except IndexError:
+            print("Number input was too large for the board")
+            raise Exception('Number is too large for board')
 
     def print_board(self):
         """Builds board and prints in console"""
