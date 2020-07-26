@@ -14,3 +14,7 @@ class NoNumberInputError(InvalidGameStateError):
 class NumberOutOfBoundsError(InvalidGameStateError):
     """For when a player inputs a number outside the bounds of the board"""
     pass
+
+class GameWonException(InvalidGameStateError):
+    """For when a player has won the game"""
+    pass
