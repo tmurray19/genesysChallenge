@@ -1,6 +1,6 @@
 # Define constants to print out board to players
 
-from connect_five_errors import BoardFullErorr, NoNumberInputError, NumberOutOfBoundsError
+from connect_five_errors import BoardFullErorr, NoNumberInputError, NumberOutOfBoundsError, GameWonException
 
 class Game:
     """ 
@@ -55,7 +55,7 @@ class Game:
 
             # Check to see if the winner has been found
             if(self.check_for_winner(chip)):
-                return f"{colour} has won!!"
+                raise GameWonException(f"{colour} has won!!")
             
             self.current_turn = 'RED' if colour=='YELLOW' else 'YELLOW'
         except ValueError:

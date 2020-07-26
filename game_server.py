@@ -2,7 +2,7 @@
 import socket
 from threading import Thread
 import connect_five_logic
-from connect_five_errors import InvalidGameStateError
+from connect_five_errors import GameWonException, InvalidGameStateError
 import time
 
 # Define port and host for server
@@ -65,6 +65,9 @@ class Client(Thread):
                         server_msg = b''
                         try:
                             g.insert_chip(self.socket.recv(1024), self.player_colour)
+                        except GameWonException as winner:
+                            print(winner)
+                            break
                         except InvalidGameStateError as e:
                             print(e)
                             server_msg += f"Error occured: {e}".encode()
@@ -81,12 +84,12 @@ class Client(Thread):
                         self.socket.sendall(server_msg)
                         server_msg = b''
                         time.sleep(5)
-                    
                 else:
                     self.socket.send(f'{g.print_board()}\n{g.get_current_turn()} has won! Congratulations.'.encode())
                     print("Game is over, closing")
                     break
             server_socket.close()
+        # For each exception, we decrement the current active connection counter
         except ConnectionResetError as e:
             print(e)
             print("Client unexpectedly disconnected, breaking connection")
@@ -110,7 +113,12 @@ g = connect_five_logic.Game()
 
 while True:    
     # Accept a client
-    client_socket, address = server_socket.accept()
+    try:
+        client_socket, address = server_socket.accept()
+    except OSError as e:
+        print(f"Error occured: {e}")
+        print("Closing server")
+        break
     # increment the player counter
     count+=1
 
