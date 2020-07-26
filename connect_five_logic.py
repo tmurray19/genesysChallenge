@@ -1,5 +1,6 @@
 # Define constants to print out board to players
 
+from connect_five_errors import BoardFullErorr
 
 class Game:
     """ 
@@ -43,7 +44,7 @@ class Game:
             # If the top of the column is not empty, we can't place a chip here
             if col[0] != self.chips.get("EMPTY"):
                 print("Column is full")
-                raise Exception('Column is full')
+                raise BoardFullErorr('Column is full')
             
             # Move through the column bottom to top until an empty slot is found
             i = -1
