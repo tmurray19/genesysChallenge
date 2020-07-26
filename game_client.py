@@ -1,4 +1,5 @@
 import socket 
+import time
 
 # Define port and host for server
 host = '127.0.0.1'
@@ -12,10 +13,13 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 def client():
     client_socket.connect((host,port))
+    
     while True:
-        client_in = input(client_socket.recv(1024).decode())
-        
-        client_socket.send(client_in.encode())
+        server_msg = client_socket.recv(1024).decode()
+        if ('wait' in server_msg):
+            print(server_msg)
+        else:
+            client_socket.send(input(server_msg).encode())
 
 
 if __name__ == '__main__': 
