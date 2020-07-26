@@ -1,6 +1,6 @@
 # Define constants to print out board to players
 
-from connect_five_errors import BoardFullErorr
+from connect_five_errors import BoardFullErorr, NoNumberInputError, NumberOutOfBoundsError
 
 class Game:
     """ 
@@ -60,10 +60,10 @@ class Game:
             self.current_turn = 'RED' if colour=='YELLOW' else 'YELLOW'
         except ValueError:
             print("Value error has occured, user did not enter number")
-            raise Exception('Player did not enter number')
+            raise NoNumberInputError('Player did not enter number')
         except IndexError:
             print("Number input was too large for the board")
-            raise Exception('Number is too large for board')
+            raise NumberOutOfBoundsError('Invalid number for board size')
 
     def print_board(self):
         """Builds board and prints in console"""

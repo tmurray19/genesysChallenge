@@ -2,7 +2,7 @@
 import socket
 from threading import Thread
 import connect_five_logic
-from connect_five_errors import BoardFullErorr
+from connect_five_errors import InvalidGameStateError
 import time
 
 # Define port and host for server
@@ -65,7 +65,7 @@ class Client(Thread):
                         server_msg = b''
                         try:
                             g.insert_chip(self.socket.recv(1024), self.player_colour)
-                        except BoardFullErorr as e:
+                        except InvalidGameStateError as e:
                             print(e)
                             server_msg += f"Error occured: {e}".encode()
                     # This code handles abrupt disconnections from a client for the other client
