@@ -18,6 +18,11 @@ def client():
         server_msg = client_socket.recv(1024).decode()
         if ('wait' in server_msg):
             print(server_msg)
+        if ('Congratulations' in server_msg):
+            print(server_msg)
+            print("Game over, closing connection")
+            client_socket.close()
+            break
         else:
             client_socket.send(input(server_msg).encode())
 
